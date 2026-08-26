@@ -49,19 +49,14 @@ INSERT INTO produtos (nome_produto, preco) VALUES
 ('Hub USB-C', 150.00), ('Mesa Digitalizadora', 400.00);
 
 -- Inserindo Vendas (100 registros)
-WITH RECURSIVE generate_series(value) AS (
-    SELECT 1
-    UNION ALL
-    SELECT value + 1 FROM generate_series WHERE value < 100
-)
 INSERT INTO vendas (id_cliente, id_produto, quantidade, valor_total, data_venda)
 SELECT 
-    CAST((abs(random()) % 28) + 1 AS INT),
-    CAST((abs(random()) % 10) + 1 AS INT),
-    CAST((abs(random()) % 5) + 1 AS INT),
+    floor(random() * 28 + 1)::int,
+    floor(random() * 10 + 1)::int,
+    floor(random() * 5 + 1)::int,
     150.00,
-    '2026-03-01'
-FROM generate_series;
+    '2026-03-01'::date
+FROM generate_series(1, 96);
 
 INSERT INTO vendas (id_cliente, id_produto, quantidade, valor_total, data_venda) VALUES
 (5, 2, 2, 240.00, NULL),        -- [Dado Vazio]
